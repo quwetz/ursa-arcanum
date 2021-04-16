@@ -4,16 +4,31 @@
 [ext_resource path="res://Tilesets/TS_Dungeon4.tres" type="TileSet" id=2]
 [ext_resource path="res://Scripts/LevelGeneration/Level_Generator.gd" type="Script" id=3]
 
-[node name="YSort" type="Node2D"]
+[node name="LevelGenerator" type="Node2D"]
+script = ExtResource( 3 )
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Roof" type="TileMap" parent="."]
+z_index = 10
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
-collision_layer = 8
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
 collision_mask = 0
 format = 1
-script = ExtResource( 3 )
+
+[node name="Floor" type="TileMap" parent="."]
+light_mask = 0
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 8
+collision_mask = 2147483648
+format = 1
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 37.0812, 28.6056 )

@@ -45,15 +45,13 @@ func add_doors():
 		var v1_points = e.v1.get_adjacent_points(e.v2)
 		var v2_points = e.v2.get_adjacent_points(e.v1)
 		#first and last elements should not be chosen because they are obstructed by walls
-		var door_pos: int = rng.randi_range(1, v1_points.size() - 3)
+		var door_pos: int = rng.randi_range(1, v1_points.size() - 2)
 		e.v1.tiles.set_value(v1_points[door_pos].x - e.v1._left_x, v1_points[door_pos].y - e.v1._top_y, "F")
-		e.v1.tiles.set_value(v1_points[door_pos+1].x - e.v1._left_x, v1_points[door_pos+1].y - e.v1._top_y, "F")
 		e.v2.tiles.set_value(v2_points[door_pos].x - e.v2._left_x, v2_points[door_pos].y - e.v2._top_y, "F")
-		e.v2.tiles.set_value(v2_points[door_pos+1].x - e.v2._left_x, v2_points[door_pos+1].y - e.v2._top_y, "F")
 
 
 # adds corridor rooms to the graph if needed for room_connections
-# postcondition: all edges connect rooms that are directly adjacent and have enough space to fit a door (2 Tiles)
+# postcondition: all edges connect rooms that are directly adjacent and have enough space to fit a door (1 Tile)
 func add_corridors():
 	# array to store the new edges / edges to remove connecting the corridors
 	# (adding/removing afterwards is needed to prevent unexpected behaviour by altering the arrray during the loop
@@ -61,30 +59,30 @@ func add_corridors():
 	var edges_to_remove: Array = []
 	for e in room_graph._E:
 		if e.v1.is_adjacent(e.v2):
-			if e.v1.get_adjacent_points(e.v2).size() < 4:
-				# if adjacent and the number of adjacent points is smaller than 4
-				# we need to create a 5x5 corridor room that creates an 90° connection between the rooms
+			if e.v1.get_adjacent_points(e.v2).size() < 3:
+				# if adjacent and the number of adjacent points is smaller than 3
+				# we need to create a 3x3 corridor room that creates an 90° connection between the rooms
 				# there are alway two possible locatiions for that, calculate both, and use the one,
-				# use the one thats not colliding with any other room (one of them should always be possible)
+				# thats not colliding with any other room (one of them should always be possible)
 				var corridor1_pos: Vector2 = Vector2()
 				var corridor2_pos: Vector2 = Vector2()
 				if e.v1.center.x < e.v2.center.x:
 					# v1 is left of v2
 					corridor1_pos.x = e.v1._right_x + 2
-					corridor2_pos.x = e.v2._left_x - 3
+					corridor2_pos.x = e.v2._left_x - 2
 				else:
 					# v1 is right of v2
-					corridor1_pos.x = e.v1._left_x - 3
+					corridor1_pos.x = e.v1._left_x - 2
 					corridor2_pos.x = e.v2._right_x + 2
 				if e.v1.center.y < e.v2.center.y:
 					# v1 is on top of v2
-					corridor1_pos.y = e.v2._top_y - 3
+					corridor1_pos.y = e.v2._top_y - 2
 					corridor2_pos.y = e.v1._bottom_y + 2
 				else:
 					# v1 is beneath than v2
 					corridor1_pos.y = e.v2._bottom_y + 2
-					corridor2_pos.y = e.v1._top_y - 3
-				var corridor: Room = Room.new(corridor1_pos, Vector2(4,4))
+					corridor2_pos.y = e.v1._top_y - 2
+				var corridor: Room = Room.new(corridor1_pos, Vector2(3,3))
 				if corridor.intersections(rooms).size() > 0:
 					corridor.set_center(corridor2_pos)
 				# add the new corridor if it's not intersecting any other room
