@@ -1,0 +1,226 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "SupportRune",
+"class": "AmplifySupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/amplify_support.gd"
+}, {
+"base": "Rune",
+"class": "BehaviourRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Behaviours/behavior_rune.gd"
+}, {
+"base": "SupportRune",
+"class": "BounceSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/bounce_support.gd"
+}, {
+"base": "SupportRune",
+"class": "ChainSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/chain_support.gd"
+}, {
+"base": "Rune",
+"class": "ElementRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Elements/element_rune.gd"
+}, {
+"base": "SupportRune",
+"class": "FasterSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/faster_support.gd"
+}, {
+"base": "ElementRune",
+"class": "FireRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Elements/fire_rune.gd"
+}, {
+"base": "SupportRune",
+"class": "ForkSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/fork_support.gd"
+}, {
+"base": "",
+"class": "GitAPI",
+"language": "NativeScript",
+"path": "res://git_api.gdns"
+}, {
+"base": "Reference",
+"class": "Graph",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/Graph.gd"
+}, {
+"base": "Reference",
+"class": "GraphEdge",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/GraphEdge.gd"
+}, {
+"base": "Reference",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/Grid.gd"
+}, {
+"base": "Reference",
+"class": "Int2D",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/Int2D.gd"
+}, {
+"base": "Reference",
+"class": "LevelLayout",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/LevelLayout.gd"
+}, {
+"base": "SupportRune",
+"class": "PierceSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/pierce_support.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://Scripts/Spells/projectile.gd"
+}, {
+"base": "BehaviourRune",
+"class": "ProjectileRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Behaviours/projectile_rune.gd"
+}, {
+"base": "SupportRune",
+"class": "RepeatSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/repeat_support.gd"
+}, {
+"base": "Reference",
+"class": "Room",
+"language": "GDScript",
+"path": "res://Scripts/LevelGeneration/Room.gd"
+}, {
+"base": "Reference",
+"class": "Rune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/rune.gd"
+}, {
+"base": "SupportRune",
+"class": "SlowerSupport",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/slower_support.gd"
+}, {
+"base": "Reference",
+"class": "Spell",
+"language": "GDScript",
+"path": "res://Scripts/Spells/spell.gd"
+}, {
+"base": "Rune",
+"class": "SupportRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Supports/support_rune.gd"
+}, {
+"base": "Reference",
+"class": "Util",
+"language": "GDScript",
+"path": "res://Scripts/Util.gd"
+} ]
+_global_script_class_icons={
+"AmplifySupport": "",
+"BehaviourRune": "",
+"BounceSupport": "",
+"ChainSupport": "",
+"ElementRune": "",
+"FasterSupport": "",
+"FireRune": "",
+"ForkSupport": "",
+"GitAPI": "",
+"Graph": "",
+"GraphEdge": "",
+"Grid": "",
+"Int2D": "",
+"LevelLayout": "",
+"PierceSupport": "",
+"Projectile": "",
+"ProjectileRune": "",
+"RepeatSupport": "",
+"Room": "",
+"Rune": "",
+"SlowerSupport": "",
+"Spell": "",
+"SupportRune": "",
+"Util": ""
+}
+
+[application]
+
+config/name="shooter"
+
+[autoload]
+
+Globals="*res://Scripts/Globals.gd"
+
+[gdnative]
+
+singletons=[ "res://git_api.gdnlib" ]
+
+[input]
+
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cast={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+scroll_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+scroll_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+roll={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemies"
+2d_physics/layer_3="Projectiles"
+2d_physics/layer_4="Wall"
+2d_physics/layer_5="Water"
+
+[rendering]
+
+quality/2d/use_pixel_snap=true
+environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_environment="res://default_env.tres"
