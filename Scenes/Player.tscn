@@ -539,13 +539,8 @@ shape = SubResource( 1 )
 [node name="ViewLight" type="Light2D" parent="CollisionShape2D"]
 texture = ExtResource( 3 )
 color = Color( 0.952941, 0.752941, 0.517647, 1 )
-shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 6.0
-
-[node name="AmbientLight" type="Light2D" parent="CollisionShape2D"]
-texture = ExtResource( 3 )
-energy = 0.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -6 )

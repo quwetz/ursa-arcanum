@@ -28,7 +28,13 @@ func _ready():
 	active_spell.add_rune(BounceSupport.new())
 	active_spell.add_rune(ChainSupport.new())
 	active_spell.add_rune(ForkSupport.new())
-	active_spell.add_rune(AmplifySupport.new())
+#	active_spell.add_rune(AmplifySupport.new())
+	active_spell.add_rune(FasterSupport.new())
+#	active_spell.add_rune(AmplifySupport.new())
+#	active_spell.add_rune(FasterSupport.new())
+#	active_spell.add_rune(AmplifySupport.new())
+#	active_spell.add_rune(FasterSupport.new())
+#	active_spell.add_rune(AmplifySupport.new())
 #	active_spell.add_rune(FasterSupport.new())
 
 

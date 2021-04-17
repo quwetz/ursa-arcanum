@@ -1,7 +1,9 @@
 class_name Projectile
 extends KinematicBody2D
 
-var proj_scene = load("res://Scenes/projectile.tscn")
+var proj_scene = load("res://Scenes/Fireball.tscn")
+onready var Explosion = preload("res://Scenes/Explosion.tscn")
+onready var Fadeout = preload("res://Scenes/FireballEnd.tscn")
 
 var fork_angle: float = PI/4
 var motion = Vector2.ZERO setget set_motion
@@ -15,6 +17,7 @@ var n_bounce: int
 var speed: float
 var explosion_radius: float
 var dmg: float
+var lifetime: float = 1.0
 
 var exploding: bool = false
 
@@ -22,10 +25,17 @@ var target_area: Area2D
 var target_area_radius: int = 256
 
 
+func _process(delta):
+	lifetime -= delta
+	if lifetime < 0:
+		end()
+
+
 func _physics_process(delta):
 	var coll = move_and_collide(motion * delta)
 	if coll != null:
 		# collision with wall
+		explode()
 		if n_bounce > 0:
 			set_motion(motion.bounce(coll.normal))
 			rotation = motion.angle()
@@ -53,6 +63,7 @@ func initialize(s: Spell):
 #an entity is hit
 func _on_Hitbox_body_entered(body):
 	body.hit()
+	explode()
 	if n_chain > 0:
 		chain(body)
 	elif n_pierce > 0:
@@ -69,7 +80,7 @@ func copy() -> Projectile:
 	p.n_pierce = n_pierce
 	p.n_chain = n_chain
 	p.n_fork = n_fork
-	p.n_bounce = n_bounce
+#	p.n_bounce = n_bounce
 	p.speed = speed
 	p.explosion_radius = explosion_radius
 	p.exploding = exploding
@@ -120,3 +131,17 @@ func add_target_area():
 func set_motion(v: Vector2):
 	motion = v
 	rotation = v.angle()
+	
+
+func end():
+	var fadeout = Fadeout.instance()
+	get_parent().add_child(fadeout)
+	fadeout.initialize(global_position, speed, rotation)
+	queue_free()
+
+
+func explode():
+	var explosion = Explosion.instance()
+	explosion.global_position = global_position
+	explosion.rotation = rotation
+	get_parent().add_child(explosion)

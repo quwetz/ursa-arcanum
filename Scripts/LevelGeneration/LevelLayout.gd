@@ -46,8 +46,10 @@ func add_doors():
 		var v2_points = e.v2.get_adjacent_points(e.v1)
 		#first and last elements should not be chosen because they are obstructed by walls
 		var door_pos: int = rng.randi_range(1, v1_points.size() - 2)
-		e.v1.tiles.set_value(v1_points[door_pos].x - e.v1._left_x, v1_points[door_pos].y - e.v1._top_y, "F")
-		e.v2.tiles.set_value(v2_points[door_pos].x - e.v2._left_x, v2_points[door_pos].y - e.v2._top_y, "F")
+		var v1_pos = Int2D.new(v1_points[door_pos].x - e.v1._left_x, v1_points[door_pos].y - e.v1._top_y)
+		var v2_pos = Int2D.new(v2_points[door_pos].x - e.v2._left_x, v2_points[door_pos].y - e.v2._top_y)
+		e.v1.add_door(v1_pos)
+		e.v2.set_tile(v2_pos, "F")
 
 
 # adds corridor rooms to the graph if needed for room_connections

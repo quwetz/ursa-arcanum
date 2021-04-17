@@ -1,6 +1,6 @@
 extends Node2D
 
-
+const TILE_SIZE: int = 32
 
 export(int) var min_room_size = 10
 export(int) var max_room_size = 20
@@ -27,6 +27,11 @@ onready var Floor: TileMap = $Floor
 onready var Walls: TileMap = $Walls
 onready var Roof: TileMap = $Roof
 
+onready var DoorVertical = preload("res://Scenes/DoorVertical.tscn")
+onready var DoorHorizontal = preload("res://Scenes/DoorHorizontal.tscn")
+
+onready var objectContainer = $Objects
+
 func _ready():
 	FLOOR = Floor.tile_set.find_tile_by_name("FloorReg")
 	WALL = Walls.tile_set.find_tile_by_name("Wall")
@@ -51,6 +56,10 @@ func clear_all():
 	Floor.clear()
 	Walls.clear()
 	Roof.clear()
+	objectContainer.queue_free()
+	objectContainer= YSort.new()
+	objectContainer.name = "Objects"
+	add_child(objectContainer)
 
 
 
@@ -72,9 +81,23 @@ func draw_room(r: Room):
 				"W":
 					Walls.set_cell(x + r._left_x, y + r._top_y, WALL)
 					Roof.set_cell(x + r._left_x, y + r._top_y, ROOF)
-				"F":
-					Floor.set_cell(x + r._left_x, y + r._top_y, FLOOR)
+				"D":
+					var door: Node2D
+					if x == 0 or x == r.size.x - 1:
+						 door = DoorHorizontal.instance()
+					else:
+						door = DoorVertical.instance()
+					objectContainer.add_child(door)
+					door.set_global_position(tile_to_world_coordinates(Vector2(x + r._left_x, y + r._top_y)))
+					
+			Floor.set_cell(x + r._left_x, y + r._top_y, FLOOR)
 	
+
+func tile_to_world_coordinates(pos: Vector2) -> Vector2:
+	var offset: float = float(TILE_SIZE) / 2
+	return (pos * TILE_SIZE) + Vector2(offset, offset)
+	
+
 
 #func _draw():
 #	for r1 in layout.rooms:

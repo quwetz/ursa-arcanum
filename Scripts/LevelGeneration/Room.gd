@@ -158,9 +158,12 @@ func initialize_tiles():
 
 
 
-func add_door(x1: int, y1: int, x2: int, y2: int):
-	tiles.set_value(x1, y1, "F")
-	tiles.set_value(x2, y2, "F")
+func add_door(pos: Int2D):
+	set_tile(pos, "D")
+
+
+func set_tile(pos: Int2D, tile_code: String):
+	tiles.set_value(pos.x, pos.y, tile_code)
 
 
 func to_string() -> String:

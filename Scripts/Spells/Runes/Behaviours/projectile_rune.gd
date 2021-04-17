@@ -4,7 +4,7 @@ extends BehaviourRune
 const MIN_SPREAD = PI/10
 const MAX_SPREAD = PI/3
 
-var projectile_scene = preload("res://Scenes/projectile.tscn")
+var projectile_scene = preload("res://Scenes/Fireball.tscn")
 
 
 func _init():
@@ -28,7 +28,7 @@ func _execute(s: Spell, target_pos: Vector2, caster: Node):
 		p.position = caster.projSpawnPos.position.rotated(p.rotation + spread) + caster.projSpawnCenter.global_position
 		p.exploding = exploding
 		p.initialize(s)
-		caster.get_tree().get_root().add_child(p)
+		caster.get_parent().add_child(p)
 
 
 func max_spread(dist: float):
