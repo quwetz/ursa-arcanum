@@ -13,7 +13,7 @@ func _init(start: Int2D, grid: Grid, n_steps: int, rng: RandomNumberGenerator).(
 func walk(tile: String):
 	while steps_left > 0:
 		if (grid.get_value_Int2D(pos) == "Free"):
-			grid.set_value_Int2D(pos, "Pit")
+			grid.set_value_Int2D(pos, tile)
 		step()
 
 

@@ -4,7 +4,7 @@ const TILE_SIZE: int = 32
 
 export(int) var min_room_size = 10
 export(int) var max_room_size = 20
-export(int) var max_room_count = 5
+export(int) var max_room_count = 10
 export(float) var additional_conn_chance = 0.75
 
 
@@ -30,6 +30,7 @@ onready var Roof: TileMap = $Roof
 
 onready var DoorVertical = preload("res://Scenes/DoorVertical.tscn")
 onready var DoorHorizontal = preload("res://Scenes/DoorHorizontal.tscn")
+onready var Clutter = preload("res://Scenes/Clutter.tscn")
 
 onready var objectContainer = $Objects
 
@@ -89,17 +90,26 @@ func draw_room(r: Room):
 				"Pit":
 					Floor.set_cell(x + r._left_x, y + r._top_y, PIT)
 				"Door":
-					var door: Node2D
-					if x == 0 or x == r.size.x - 1:
-						 door = DoorHorizontal.instance()
-					else:
-						door = DoorVertical.instance()
-					objectContainer.add_child(door)
-					door.set_global_position(tile_to_world_coordinates(Vector2(x + r._left_x, y + r._top_y)))
+					var is_horizontal: bool = true if (x == 0 or x == r.size.x - 1) else false
+					instance_door(Vector2(x + r._left_x, y + r._top_y), is_horizontal)
+				"Clutter":
+					instance_clutter(Vector2(x + r._left_x, y + r._top_y))
 
-					
-					
-			
+
+func instance_door(pos: Vector2, is_horizontal: bool):
+	var door: Node2D
+	if is_horizontal:
+		 door = DoorHorizontal.instance()
+	else:
+		door = DoorVertical.instance()
+	objectContainer.add_child(door)
+	door.set_global_position(tile_to_world_coordinates(pos))
+
+func instance_clutter(pos: Vector2):
+	var clutter: Node2D = Clutter.instance()
+	objectContainer.add_child(clutter)
+	clutter.set_global_position(tile_to_world_coordinates(pos))
+
 
 func tile_to_world_coordinates(pos: Vector2) -> Vector2:
 	var offset: float = float(TILE_SIZE) / 2

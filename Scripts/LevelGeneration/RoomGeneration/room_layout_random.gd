@@ -14,6 +14,8 @@ func _build_room():
 	_connect_exits()
 	update_free_positions()
 	add_pit()
+	add_pillars()
+	add_clutter()
 
 
 func _connect_exits():
@@ -38,6 +40,11 @@ func draw_path(pos1: Int2D, pos2: Int2D):
 		set_path(walker.pos)
 
 
+func add_pillars():
+	for i in range(rng.randi_range(1,5)):
+		if free_positions.size() > 0:
+			tiles.set_value_Int2D(get_free_pos(), "Wall")
+
 func add_pit():
 	if rng.randf() < PIT_CHANCE:
 		var pit_pos = get_free_pos()
@@ -45,7 +52,14 @@ func add_pit():
 		walker.walk("Pit")
 
 
-
+func add_clutter():
+	for i in rng.randi_range(0, 3):
+		if free_positions.size() > 0:
+			var walker_pos = get_free_pos()
+			var steps = rng.randi_range(3, 10)
+			var walker: DrunkWalker = DrunkWalker.new(walker_pos, tiles, steps, rng)
+			walker.walk("Clutter")
+			
 
 
 func get_free_pos() -> Int2D:

@@ -47,6 +47,7 @@ func set_door(pos: Int2D):
 func set_entrance(pos: Int2D):
 	tiles.set_value_Int2D(pos, "Entrance")
 	exits.append(pos)
+	
 
 # clears the tilegrid of the room, fills with floor and adds wall to the edges
 func initialize_tiles():
