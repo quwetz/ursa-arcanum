@@ -4,13 +4,14 @@ const TILE_SIZE: int = 32
 
 export(int) var min_room_size = 10
 export(int) var max_room_size = 20
-export(int) var max_room_count = 20
+export(int) var max_room_count = 5
 export(float) var additional_conn_chance = 0.75
 
 
 var FLOOR: int
 var WALL: int
 var ROOF: int
+var PIT: int
 
 var current_floor_index: int = 0
 var floor_types = [
@@ -36,6 +37,7 @@ func _ready():
 	FLOOR = Floor.tile_set.find_tile_by_name("FloorReg")
 	WALL = Walls.tile_set.find_tile_by_name("Wall")
 	ROOF = Walls.tile_set.find_tile_by_name("Roof")
+	PIT = Floor.tile_set.find_tile_by_name("Pit")
 	clear_all()
 	layout = LevelLayout.new(min_room_size, max_room_size, max_room_count, additional_conn_chance, rng)
 	draw_rooms()
@@ -68,6 +70,8 @@ func draw_rooms():
 	clear_all()
 	for r in layout.rooms:
 		draw_room(r)
+	for c in layout.corridors:
+		draw_room(c)
 	Floor.update_bitmask_region()
 	Walls.update_bitmask_region()
 	Roof.update_bitmask_region()
@@ -76,12 +80,15 @@ func draw_rooms():
 func draw_room(r: Room):
 	for x in int(r.size.x):
 		for y in int(r.size.y):
-			var t: String = r.tiles.get_value(x,y)
+			var t: String = r.layout.tiles.get_value(x,y)
+			Floor.set_cell(x + r._left_x, y + r._top_y, FLOOR)
 			match t:
-				"W":
+				"Wall":
 					Walls.set_cell(x + r._left_x, y + r._top_y, WALL)
 					Roof.set_cell(x + r._left_x, y + r._top_y, ROOF)
-				"D":
+				"Pit":
+					Floor.set_cell(x + r._left_x, y + r._top_y, PIT)
+				"Door":
 					var door: Node2D
 					if x == 0 or x == r.size.x - 1:
 						 door = DoorHorizontal.instance()
@@ -89,9 +96,10 @@ func draw_room(r: Room):
 						door = DoorVertical.instance()
 					objectContainer.add_child(door)
 					door.set_global_position(tile_to_world_coordinates(Vector2(x + r._left_x, y + r._top_y)))
+
 					
-			Floor.set_cell(x + r._left_x, y + r._top_y, FLOOR)
-	
+					
+			
 
 func tile_to_world_coordinates(pos: Vector2) -> Vector2:
 	var offset: float = float(TILE_SIZE) / 2

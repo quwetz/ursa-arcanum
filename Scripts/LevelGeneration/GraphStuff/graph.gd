@@ -2,7 +2,6 @@ extends Reference
 
 class_name Graph
 
-# A Graph of Room Objects
 # vertices
 var _V: Array
 
@@ -31,7 +30,7 @@ func min_span_tree() -> Graph:
 	msp.add_vertex(nodes.pop_front())
 	
 	# sort the edges
-	_E.sort_custom(GraphEdge, "is_more_axis_aligned")
+	_E.sort_custom(GraphEdge, "smaller_distance")
 	
 	while nodes.size() > 0:
 		var node_removed = false
@@ -45,7 +44,7 @@ func min_span_tree() -> Graph:
 			var v2_in_msp: bool = e.v2 in msp._V
 			if v1_in_msp != v2_in_msp:
 				msp.add_edge(e)
-				var v: Room = e.v1 if v2_in_msp else e.v2
+				var v = e.v1 if v2_in_msp else e.v2
 				msp.add_vertex(v)
 				nodes.remove(nodes.find(v))
 				node_removed = true
@@ -56,14 +55,14 @@ func min_span_tree() -> Graph:
 	return msp
 
 
-func contains(v: Room) -> bool:
+func contains(v) -> bool:
 	return v in _V
 
 
 # Adds a Vertex v to the Graph, if v is not already in the graph. 
 # Returns false if the vertex is already in the Graph
 # QND: LINEAR RUNTIME! FIX: use a better datastructure
-func add_vertex(v: Room) -> bool:
+func add_vertex(v) -> bool:
 	if v in _V:
 		return false
 	else:

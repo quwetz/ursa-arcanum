@@ -6,6 +6,7 @@ onready var velocity: Vector2 = Vector2.ZERO
 
 func _process(delta):
 	global_position +=  velocity * delta
+	velocity *= 0.85
 
 
 func initialize(pos, speed, rotation):

@@ -10,12 +10,15 @@ var _right_x: int
 var _bottom_y: int
 
 var neighbors: Array
-var tiles: Grid
 
+var layout: RoomLayout
+var rng: RandomNumberGenerator
 
-func _init(center_pos: Vector2, room_size: Vector2):
+func _init(center_pos: Vector2, room_size: Vector2, rng):
+	self.rng = rng
 	set_center(center_pos)
 	set_size(room_size)
+	layout = RoomLayoutRandom.new(Int2D.new(room_size.x, room_size.y), rng)
 
 
 func move(direction: Vector2):
@@ -147,25 +150,6 @@ func update_bounds_position():
 	_bottom_y = _top_y + int(round(size.y)) - 1
 
 
-# clears the tilegrid of the room, fills with floor and adds wall to the edges
-func initialize_tiles():
-	tiles = Grid.new(size.x, size.y)
-	tiles.fill("F")
-	tiles.fill_col(0, "W")
-	tiles.fill_col(size.x-1, "W")
-	tiles.fill_row(0, "W")
-	tiles.fill_row(size.y-1, "W")
-
-
-
-func add_door(pos: Int2D):
-	set_tile(pos, "D")
-
-
-func set_tile(pos: Int2D, tile_code: String):
-	tiles.set_value(pos.x, pos.y, tile_code)
-
-
 func to_string() -> String:
 	var s: String = str(self) + "\n"
 	s += "Center: " + String(center) + "\n"
@@ -186,3 +170,4 @@ static func smaller_abs_h_dist_to_center(r1: Room, r2: Room) -> bool:
 
 static func smaller_abs_v_dist_to_center(r1: Room, r2: Room) -> bool:
 	return abs(r1.center.y) < abs(r2.center.y)
+	

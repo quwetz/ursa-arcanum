@@ -10,6 +10,7 @@ var additional_conn_chance: float
 var rng: RandomNumberGenerator
 
 var rooms: Array
+var corridors: Array
 var room_graph: Graph
 
 func _init(min_room_size: int, max_room_size: int, room_count: int, chance: float, rng: RandomNumberGenerator):
@@ -19,23 +20,28 @@ func _init(min_room_size: int, max_room_size: int, room_count: int, chance: floa
 	self.additional_conn_chance = chance
 	self.rng = rng
 	rooms = []
+	corridors = []
 	generate_layout()
 
 
 func generate_layout():
 	rooms.clear()
+	corridors.clear()
 	for i in room_count:
 		add_room()
-	#rooms.append(Room.new(Vector2(0,0), Vector2(21,21)))
-	#rooms.append(Room.new(Vector2(-21,19), Vector2(21,21)))
 	slide_rooms_to_center()
 	slide_rooms_to_center()
 	set_all_neighbors()
 	generate_graph()
 	add_corridors()
-	for r in rooms:
-		r.initialize_tiles()
 	add_doors()
+	build_rooms()
+	
+
+func build_rooms():
+	for r in rooms:
+		r.layout._build_room()
+
 
 # adds gaps in the walls between the rooms
 # precondition: all rooms in the graph must be adjacent and have space for doors
@@ -48,8 +54,8 @@ func add_doors():
 		var door_pos: int = rng.randi_range(1, v1_points.size() - 2)
 		var v1_pos = Int2D.new(v1_points[door_pos].x - e.v1._left_x, v1_points[door_pos].y - e.v1._top_y)
 		var v2_pos = Int2D.new(v2_points[door_pos].x - e.v2._left_x, v2_points[door_pos].y - e.v2._top_y)
-		e.v1.add_door(v1_pos)
-		e.v2.set_tile(v2_pos, "F")
+		e.v1.layout.set_door(v1_pos)
+		e.v2.layout.set_entrance(v2_pos)
 
 
 # adds corridor rooms to the graph if needed for room_connections
@@ -84,15 +90,15 @@ func add_corridors():
 					# v1 is beneath than v2
 					corridor1_pos.y = e.v2._bottom_y + 2
 					corridor2_pos.y = e.v1._top_y - 2
-				var corridor: Room = Room.new(corridor1_pos, Vector2(3,3))
+				var corridor: Room = Room.new(corridor1_pos, Vector2(3,3), rng)
 				if corridor.intersections(rooms).size() > 0:
 					corridor.set_center(corridor2_pos)
 				# add the new corridor if it's not intersecting any other room
 				if(corridor.intersections(rooms).size() == 0):
-					rooms.append(corridor)
+					corridors.append(corridor)
 					room_graph.add_vertex(corridor)
-					edges_to_add.append(GraphEdge.new(e.v1, corridor))
-					edges_to_add.append(GraphEdge.new(e.v2, corridor))
+					edges_to_add.append(RoomGraphEdge.new(e.v1, corridor))
+					edges_to_add.append(RoomGraphEdge.new(e.v2, corridor))
 					edges_to_remove.append(e)
 				else:
 					edges_to_remove.append(e)
@@ -102,7 +108,7 @@ func add_corridors():
 			if (e.v1._bottom_y < e.v2._top_y) or (e.v1._top_y > e.v2._bottom_y):
 				# v1 and v2 are vertically aligned
 				corridor_pos.x = rng.randi_range(max(e.v1._left_x, e.v2._left_x) + 1, min(e.v1._right_x, e.v2._right_x) - 2)
-				corridor_size = Vector2(4, max(e.v2._top_y - e.v1._bottom_y - 1, e.v1._top_y - e.v2._bottom_y - 1))
+				corridor_size = Vector2(3, max(e.v2._top_y - e.v1._bottom_y - 1, e.v1._top_y - e.v2._bottom_y - 1))
 				if e.v1._bottom_y < e.v2._top_y:
 					# v1 is on top of v2
 					corridor_pos.y = e.v1._bottom_y + int((corridor_size.y + 1) / 2)
@@ -112,18 +118,18 @@ func add_corridors():
 			else:
 				#v1 and v2 are horizontaly aligned
 				corridor_pos.y = rng.randi_range(max(e.v1._top_y, e.v2._top_y) + 1, min(e.v1._bottom_y, e.v2._bottom_y) - 2)
-				corridor_size = Vector2(max(e.v2._left_x - e.v1._right_x - 1, e.v1._left_x - e.v2._right_x - 1), 4)
+				corridor_size = Vector2(max(e.v2._left_x - e.v1._right_x - 1, e.v1._left_x - e.v2._right_x - 1), 3)
 				if e.v1._left_x < e.v2._right_x:
 					# v1 is to the left of v2
 					corridor_pos.x = e.v1._right_x + int((corridor_size.x + 1) / 2)
 				elif e.v1._left_x > e.v2._right_x:
 					# v1 is to the right of v2
 					corridor_pos.x = e.v2._right_x + int((corridor_size.x + 1) / 2)
-			var corridor: Room = Room.new(corridor_pos, corridor_size)
-			rooms.append(corridor)
+			var corridor: Room = Room.new(corridor_pos, corridor_size, rng)
+			corridors.append(corridor)
 			room_graph.add_vertex(corridor)
-			edges_to_add.append(GraphEdge.new(e.v1, corridor))
-			edges_to_add.append(GraphEdge.new(e.v2, corridor))
+			edges_to_add.append(RoomGraphEdge.new(e.v1, corridor))
+			edges_to_add.append(RoomGraphEdge.new(e.v2, corridor))
 			edges_to_remove.append(e)
 			assert(corridor.intersections(rooms).size() == 0)
 	for e in edges_to_remove:
@@ -136,7 +142,7 @@ func generate_graph():
 	var adjacent_room_graph = Graph.new(rooms, [])
 	for r in rooms:
 		for n in r.neighbors:
-			adjacent_room_graph.add_edge(GraphEdge.new(r, n))
+			adjacent_room_graph.add_edge(RoomGraphEdge.new(r, n))
 	# generate a minimum spanning tree
 	room_graph = adjacent_room_graph.min_span_tree()
 	# QND: go over all edges of adjacent_room_graph 
@@ -148,9 +154,10 @@ func generate_graph():
 
 func add_room():
 	var r = Room.new(Vector2.ZERO, Vector2(
-			Util.randi_range_step(min_room_size, max_room_size, 1, rng), 
-			Util.randi_range_step(min_room_size, max_room_size, 1, rng)
-			))
+			rng.randi_range(min_room_size, max_room_size), 
+			rng.randi_range(min_room_size, max_room_size)
+			), rng)
+	
 	
 	var dir = Vector2.UP.rotated(rng.randf_range(-PI,PI))
 	while r.intersections(rooms).size() > 0:
