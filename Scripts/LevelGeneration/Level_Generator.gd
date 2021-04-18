@@ -31,8 +31,10 @@ onready var Roof: TileMap = $Roof
 onready var DoorVertical = preload("res://Scenes/DoorVertical.tscn")
 onready var DoorHorizontal = preload("res://Scenes/DoorHorizontal.tscn")
 onready var Clutter = preload("res://Scenes/Clutter.tscn")
+onready var Enemy = preload("res://Scenes/Enemy.tscn")
 
 onready var objectContainer = $Objects
+onready var enemyContainer = $Enemies
 
 func _ready():
 	FLOOR = Floor.tile_set.find_tile_by_name("FloorReg")
@@ -94,6 +96,14 @@ func draw_room(r: Room):
 					instance_door(Vector2(x + r._left_x, y + r._top_y), is_horizontal)
 				"Clutter":
 					instance_clutter(Vector2(x + r._left_x, y + r._top_y))
+				"Enemy":
+					instance_enemy(Vector2(x + r._left_x, y + r._top_y))
+
+
+func instance_enemy(pos: Vector2):
+	var enemy = Enemy.instance()
+	enemyContainer.add_child(enemy)
+	enemy.set_global_position(tile_to_world_coordinates(pos))
 
 
 func instance_door(pos: Vector2, is_horizontal: bool):
@@ -104,6 +114,7 @@ func instance_door(pos: Vector2, is_horizontal: bool):
 		door = DoorVertical.instance()
 	objectContainer.add_child(door)
 	door.set_global_position(tile_to_world_coordinates(pos))
+	
 
 func instance_clutter(pos: Vector2):
 	var clutter: Node2D = Clutter.instance()

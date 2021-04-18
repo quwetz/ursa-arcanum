@@ -15,6 +15,7 @@ func _build_room():
 	update_free_positions()
 	add_pit()
 	add_pillars()
+	add_mobs()
 	add_clutter()
 
 
@@ -50,6 +51,12 @@ func add_pit():
 		var pit_pos = get_free_pos()
 		var walker: DrunkWalker = DrunkWalker.new(pit_pos, tiles, 50, rng)
 		walker.walk("Pit")
+
+
+func add_mobs():
+	for i in range(rng.randi_range(4, 10)):
+		if free_positions.size() > 0:
+			tiles.set_value_Int2D(get_free_pos(), "Enemy")
 
 
 func add_clutter():
