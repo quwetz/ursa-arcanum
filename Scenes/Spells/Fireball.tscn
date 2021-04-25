@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scenes/projectile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Spells/projectile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/Particles/Fireball1.png" type="Texture" id=2]
 [ext_resource path="res://sprites/Particles/Fireball2.png" type="Texture" id=3]
 [ext_resource path="res://sprites/Light.png" type="Texture" id=4]

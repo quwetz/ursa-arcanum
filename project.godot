@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Supports/chain_support.gd"
 }, {
+"base": "BehaviourRune",
+"class": "ChannelRune",
+"language": "GDScript",
+"path": "res://Scripts/Spells/Runes/Behaviours/channel_rune.gd"
+}, {
 "base": "StaticBody2D",
 "class": "Door",
 "language": "GDScript",
@@ -44,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Elements/element_rune.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "EntityBase",
+"language": "GDScript",
+"path": "res://Scripts/Entities/entity_base.gd"
+}, {
 "base": "SupportRune",
 "class": "FasterSupport",
 "language": "GDScript",
@@ -57,7 +67,7 @@ _global_script_classes=[ {
 "base": "ParticleOneshot",
 "class": "FireballFadeout",
 "language": "GDScript",
-"path": "res://Scripts/FireballEnd.gd"
+"path": "res://Scripts/Particles/fireball_fadeout.gd"
 }, {
 "base": "SupportRune",
 "class": "ForkSupport",
@@ -112,12 +122,17 @@ _global_script_classes=[ {
 "base": "Particles2D",
 "class": "ParticleOneshot",
 "language": "GDScript",
-"path": "res://Scripts/Explosion.gd"
+"path": "res://Scripts/Particles/particle_one_shot.gd"
 }, {
 "base": "SupportRune",
 "class": "PierceSupport",
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Supports/pierce_support.gd"
+}, {
+"base": "EntityBase",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Scripts/Entities/Player/Player.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Projectile",
@@ -169,6 +184,26 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/spell.gd"
 }, {
+"base": "Reference",
+"class": "StateBase",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/state_base.gd"
+}, {
+"base": "StateBase",
+"class": "StatePlayerCast",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Player/state_player_cast.gd"
+}, {
+"base": "StateBase",
+"class": "StatePlayerMove",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Player/state_player_move.gd"
+}, {
+"base": "StateBase",
+"class": "StatePlayerRoll",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Player/state_player_roll.gd"
+}, {
 "base": "Rune",
 "class": "SupportRune",
 "language": "GDScript",
@@ -189,9 +224,11 @@ _global_script_class_icons={
 "BehaviourRune": "",
 "BounceSupport": "",
 "ChainSupport": "",
+"ChannelRune": "",
 "Door": "",
 "DrunkWalker": "",
 "ElementRune": "",
+"EntityBase": "",
 "FasterSupport": "",
 "FireRune": "",
 "FireballFadeout": "",
@@ -207,6 +244,7 @@ _global_script_class_icons={
 "ManhattenWalker": "",
 "ParticleOneshot": "",
 "PierceSupport": "",
+"Player": "",
 "Projectile": "",
 "ProjectileRune": "",
 "RepeatSupport": "",
@@ -217,6 +255,10 @@ _global_script_class_icons={
 "Rune": "",
 "SlowerSupport": "",
 "Spell": "",
+"StateBase": "",
+"StatePlayerCast": "",
+"StatePlayerMove": "",
+"StatePlayerRoll": "",
 "SupportRune": "",
 "Util": "",
 "Walker": ""
@@ -294,18 +336,19 @@ use={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
+2d_physics/layer_1="EntityColliders"
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Projectiles"
-2d_physics/layer_4="Wall"
-2d_physics/layer_5="Water"
+2d_physics/layer_4="Walls"
+2d_physics/layer_5="NotWalkable"
 
 [rendering]
 
 quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
-quality/2d/use_pixel_snap=true
+2d/snapping/use_gpu_pixel_snap=true
 quality/filters/anisotropic_filter_level=1
 environment/default_clear_color=Color( 0.494118, 0.494118, 0.494118, 1 )
 environment/default_environment="res://default_env.tres"
+quality/2d/use_pixel_snap=true

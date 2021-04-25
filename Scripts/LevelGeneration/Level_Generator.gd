@@ -28,10 +28,10 @@ onready var Floor: TileMap = $Floor
 onready var Walls: TileMap = $Walls
 onready var Roof: TileMap = $Roof
 
-onready var DoorVertical = preload("res://Scenes/DoorVertical.tscn")
-onready var DoorHorizontal = preload("res://Scenes/DoorHorizontal.tscn")
-onready var Clutter = preload("res://Scenes/Clutter.tscn")
-onready var Enemy = preload("res://Scenes/Enemy.tscn")
+onready var DoorVertical = preload("res://Scenes/Objects/DoorVertical.tscn")
+onready var DoorHorizontal = preload("res://Scenes/Objects/DoorHorizontal.tscn")
+onready var Clutter = preload("res://Scenes/Objects/Clutter.tscn")
+onready var Enemy = preload("res://Scenes/Entities/Enemy.tscn")
 
 onready var objectContainer = $Objects
 onready var enemyContainer = $Enemies
@@ -62,9 +62,13 @@ func clear_all():
 	Walls.clear()
 	Roof.clear()
 	objectContainer.queue_free()
-	objectContainer= YSort.new()
+	objectContainer = YSort.new()
 	objectContainer.name = "Objects"
 	add_child(objectContainer)
+	enemyContainer.queue_free()
+	enemyContainer = YSort.new()
+	enemyContainer.name = "Enemies"
+	add_child(enemyContainer)
 
 
 

@@ -1,9 +1,9 @@
 class_name Projectile
 extends KinematicBody2D
 
-var proj_scene = load("res://Scenes/Fireball.tscn")
-onready var Explosion = preload("res://Scenes/Explosion.tscn")
-onready var Fadeout = preload("res://Scenes/FireballEnd.tscn")
+var proj_scene = load("res://Scenes/Spells/Fireball.tscn")
+onready var Explosion = preload("res://Scenes/Particles/Explosion.tscn")
+onready var Fadeout = preload("res://Scenes/Particles/FireballEnd.tscn")
 
 var fork_angle: float = PI/4
 var motion = Vector2.ZERO setget set_motion
