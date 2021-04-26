@@ -7,7 +7,7 @@ var StateCast
 
 var velocity: Vector2 = Vector2.ZERO
 
-func _init(e: EntityBase).(e):
+func _init(e: Node2D).(e):
 	StateRoll = load(states_path + "/Player/state_player_roll.gd")
 	StateCast = load(states_path + "/Player/state_player_cast.gd")
 
@@ -38,7 +38,7 @@ func _handle_input() -> StateBase:
 
 func set_velocity():
 	var movement_input: Vector2 = e.get_playermovement_input()
-	velocity = movement_input * e.speed
+	velocity = movement_input * e.stats.move_speed
 	if velocity != Vector2.ZERO:
 		e.set_direction(movement_input)
 

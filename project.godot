@@ -129,10 +129,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Supports/pierce_support.gd"
 }, {
-"base": "EntityBase",
-"class": "Player",
+"base": "Position2D",
+"class": "Pivot",
 "language": "GDScript",
-"path": "res://Scripts/Entities/Player/Player.gd"
+"path": "res://Scripts/Entities/Components/Pivot.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Projectile",
@@ -204,6 +204,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Entities/States/Player/state_player_roll.gd"
 }, {
+"base": "Node",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://Scripts/Entities/Components/Stats.gd"
+}, {
 "base": "Rune",
 "class": "SupportRune",
 "language": "GDScript",
@@ -244,7 +249,7 @@ _global_script_class_icons={
 "ManhattenWalker": "",
 "ParticleOneshot": "",
 "PierceSupport": "",
-"Player": "",
+"Pivot": "",
 "Projectile": "",
 "ProjectileRune": "",
 "RepeatSupport": "",
@@ -259,6 +264,7 @@ _global_script_class_icons={
 "StatePlayerCast": "",
 "StatePlayerMove": "",
 "StatePlayerRoll": "",
+"Stats": "",
 "SupportRune": "",
 "Util": "",
 "Walker": ""

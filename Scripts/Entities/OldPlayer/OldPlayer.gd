@@ -1,5 +1,3 @@
-class_name Player
-
 extends EntityBase
 
 

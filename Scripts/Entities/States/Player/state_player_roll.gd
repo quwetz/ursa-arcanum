@@ -8,13 +8,13 @@ var StateCast
 var velocity: Vector2 = Vector2.ZERO
 var is_cast_pressed: bool = false
 
-func _init(e: EntityBase).(e):
+func _init(e: Node2D).(e):
 	StateMove = load(states_path + "/Player/state_player_move.gd")
 	StateCast = load(states_path + "/Player/state_player_cast.gd")
 
 func _enter():
 	e.animationState.travel("Roll")
-	velocity = e.facing_direction * e.speed * e.roll_speed_multi
+	velocity = e.facing_direction * e.stats.move_speed * e.stats.roll_speed_multi
 
 func _exit():
 	pass

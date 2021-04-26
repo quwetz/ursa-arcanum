@@ -5,7 +5,7 @@ extends StateBase
 var StateMove
 var StateRoll
 
-func _init(e: EntityBase).(e):
+func _init(e: Node2D).(e):
 	StateMove = load(states_path + "/Player/state_player_move.gd")
 	StateRoll = load(states_path + "/Player/state_player_roll.gd")
 	

@@ -5,7 +5,7 @@ extends Reference
 var e
 var states_path = "res://Scripts/Entities/States"
 
-func _init(e: EntityBase):
+func _init(e: Node2D):
 	self.e = e
 
 func _enter():

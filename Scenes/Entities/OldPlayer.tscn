@@ -1,18 +1,16 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=53 format=2]
 
-[ext_resource path="res://sprites/Player.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Entities/EnitityBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/Light.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Components/Pivot.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Components/Stats.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scripts/Entities/Components/player_stats.gd" type="Script" id=6]
-[ext_resource path="res://Scripts/Entities/player.gd" type="Script" id=7]
+[ext_resource path="res://sprites/Player.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Entities/OldPlayer/OldPlayer.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.65727
 height = 2.78581
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=46]
 length = 2.0
 step = 0.25
 tracks/0/type = "value"
@@ -42,7 +40,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=47]
 length = 2.0
 step = 0.25
 tracks/0/type = "value"
@@ -72,7 +70,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=48]
 length = 2.0
 step = 0.25
 tracks/0/type = "value"
@@ -102,7 +100,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=49]
 length = 2.0
 step = 0.25
 tracks/0/type = "value"
@@ -132,7 +130,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=50]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -148,7 +146,7 @@ tracks/0/keys = {
 "values": [ 18 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=51]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -164,7 +162,7 @@ tracks/0/keys = {
 "values": [ 12 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=52]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -180,7 +178,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=53]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -196,7 +194,7 @@ tracks/0/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=54]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -224,7 +222,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=55]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -252,7 +250,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=56]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -280,7 +278,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=57]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -308,7 +306,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=58]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -324,7 +322,7 @@ tracks/0/keys = {
 "values": [ 19, 20, 21, 22, 23, 18 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=59]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -340,7 +338,7 @@ tracks/0/keys = {
 "values": [ 13, 14, 15, 16, 17, 12 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=60]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -356,7 +354,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=61]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -490,7 +488,7 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=45]
 
-[sub_resource type="AnimationNodeStateMachine" id=46]
+[sub_resource type="AnimationNodeStateMachine" id=62]
 states/Cast/node = SubResource( 24 )
 states/Cast/position = Vector2( 92.701, 172 )
 states/Idle/node = SubResource( 29 )
@@ -503,75 +501,58 @@ transitions = [ "Idle", "Run", SubResource( 40 ), "Run", "Idle", SubResource( 41
 start_node = "Idle"
 graph_offset = Vector2( -196.299, 0 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=47]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=63]
 
-[node name="Player" type="KinematicBody2D"]
-script = ExtResource( 7 )
+[node name="Player" instance=ExtResource( 1 )]
+collision_mask = 10
+script = ExtResource( 5 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -8 )
-texture = ExtResource( 1 )
-hframes = 60
-frame = 18
-__meta__ = {
-"_editor_description_": ""
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" parent="." index="0"]
 rotation = 1.5708
 shape = SubResource( 1 )
-__meta__ = {
-"_editor_description_": ""
-}
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/CastDown = SubResource( 2 )
-anims/CastLeft = SubResource( 3 )
-anims/CastRight = SubResource( 4 )
-anims/CastUp = SubResource( 5 )
-anims/IdleDown = SubResource( 6 )
-anims/IdleLeft = SubResource( 7 )
-anims/IdleRight = SubResource( 8 )
-anims/IdleUp = SubResource( 9 )
-anims/RollDown = SubResource( 10 )
-anims/RollLeft = SubResource( 11 )
-anims/RollRight = SubResource( 12 )
-anims/RollUp = SubResource( 13 )
-anims/RunDown = SubResource( 14 )
-anims/RunLeft = SubResource( 15 )
-anims/RunRight = SubResource( 16 )
-anims/RunUp = SubResource( 17 )
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 46 )
-anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 47 )
-parameters/Cast/BlendSpace2D/blend_position = Vector2( 0, 0 )
-parameters/Cast/TimeScale/scale = 1.0
-parameters/Idle/blend_position = Vector2( 0.0515151, 0.644828 )
-parameters/Roll/blend_position = Vector2( -0.181818, 0.0344827 )
-parameters/Run/blend_position = Vector2( 0.0212121, 0.413793 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -6 )
-current = true
-zoom = Vector2( 0.5, 0.5 )
-smoothing_enabled = true
-script = ExtResource( 3 )
-
-[node name="ViewLight" type="Light2D" parent="."]
+[node name="ViewLight" type="Light2D" parent="." index="2"]
 position = Vector2( 0.166855, 0 )
 texture = ExtResource( 2 )
 color = Color( 0.952941, 0.752941, 0.517647, 1 )
 shadow_filter = 1
 shadow_filter_smooth = 6.0
 
-[node name="ProjSpawnPivot" parent="." instance=ExtResource( 4 )]
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
 position = Vector2( 0, -6 )
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_enabled = true
+script = ExtResource( 3 )
 
-[node name="ProjSpawn" type="Position2D" parent="ProjSpawnPivot"]
-position = Vector2( 8, 0 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+anims/CastDown = SubResource( 46 )
+anims/CastLeft = SubResource( 47 )
+anims/CastRight = SubResource( 48 )
+anims/CastUp = SubResource( 49 )
+anims/IdleDown = SubResource( 50 )
+anims/IdleLeft = SubResource( 51 )
+anims/IdleRight = SubResource( 52 )
+anims/IdleUp = SubResource( 53 )
+anims/RollDown = SubResource( 54 )
+anims/RollLeft = SubResource( 55 )
+anims/RollRight = SubResource( 56 )
+anims/RollUp = SubResource( 57 )
+anims/RunDown = SubResource( 58 )
+anims/RunLeft = SubResource( 59 )
+anims/RunRight = SubResource( 60 )
+anims/RunUp = SubResource( 61 )
 
-[node name="Stats" parent="." instance=ExtResource( 5 )]
-script = ExtResource( 6 )
-max_hp = 100
+[node name="AnimationTree" type="AnimationTree" parent="." index="5"]
+tree_root = SubResource( 62 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 63 )
+parameters/Cast/BlendSpace2D/blend_position = Vector2( 0, 0 )
+parameters/Cast/TimeScale/scale = 1.0
+parameters/Idle/blend_position = Vector2( 0.0515151, 0.644828 )
+parameters/Roll/blend_position = Vector2( -0.181818, 0.0344827 )
+parameters/Run/blend_position = Vector2( 0.0212121, 0.413793 )
+
+[node name="Sprite" parent="." index="6"]
+texture = ExtResource( 4 )

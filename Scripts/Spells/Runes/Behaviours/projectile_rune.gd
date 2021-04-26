@@ -23,8 +23,8 @@ func _execute(s: Spell, target_pos: Vector2, caster: Node):
 	for j in s.n_projectiles:
 		var p = projectile_scene.instance()
 		var spread = max_spread * ((ceil(j*0.5) * (1 - ((j % 2) * 2))) / s.n_projectiles)
-		p.rotation = caster.projSpawnCenter.rotation + spread
-		p.position = caster.projSpawnPos.position.rotated(p.rotation + spread) + caster.projSpawnCenter.global_position
+		p.rotation = caster.projSpawnPivot.rotation + spread
+		p.position = caster.projSpawnPos.position.rotated(p.rotation + spread) + caster.projSpawnPivot.global_position
 		p.exploding = exploding
 		p.initialize(s)
 		caster.get_parent().add_child(p)
