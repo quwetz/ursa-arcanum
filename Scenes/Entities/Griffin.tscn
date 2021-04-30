@@ -1,0 +1,126 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://sprites/Griffin.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Components/HitBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Components/HurtBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Components/Pivot.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Components/Stats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Entities/Components/Stats/monster_stats.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Entities/griffin.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Components/PlayerDetector.tscn" type="PackedScene" id=8]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 7.0
+} ]
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 6.92169
+
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 9.72059
+height = 5.72483
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 9.86978
+height = 6.91334
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 123.188
+
+[node name="Griffin" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 11
+script = ExtResource( 7 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 9 )
+animation = "Idle"
+playing = true
+offset = Vector2( 0, -20 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 10 )
+
+[node name="HurtBox" parent="." instance=ExtResource( 3 )]
+collision_layer = 2048
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 7.62939e-06, -15.6919 )
+rotation = 1.5708
+shape = SubResource( 11 )
+
+[node name="HitBoxPivot" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -14 )
+rotation = -6.28319
+
+[node name="HitBox" parent="HitBoxPivot" instance=ExtResource( 2 )]
+position = Vector2( 4.837, 0 )
+collision_mask = 1024
+
+[node name="CollisionShape2D" parent="HitBoxPivot/HitBox" index="0"]
+position = Vector2( 0.707901, 2.86102e-06 )
+shape = SubResource( 12 )
+
+[node name="Stats" parent="." instance=ExtResource( 5 )]
+script = ExtResource( 6 )
+max_hp = 50
+move_speed = 50
+attack_range = 16
+base_damage = {
+"physical": 20
+}
+
+[node name="PlayerDetector" parent="." instance=ExtResource( 8 )]
+
+[node name="CollisionShape2D" parent="PlayerDetector" index="0"]
+shape = SubResource( 13 )
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="take_hit" from="HurtBox" to="." method="_on_HurtBox_take_hit"]
+[connection signal="area_entered" from="HitBoxPivot/HitBox" to="." method="_on_HitBox_area_entered"]
+[connection signal="no_hp" from="Stats" to="." method="_on_Stats_no_hp"]
+
+[editable path="HurtBox"]
+[editable path="HitBoxPivot/HitBox"]
+[editable path="PlayerDetector"]

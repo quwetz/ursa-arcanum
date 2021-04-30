@@ -12,6 +12,7 @@ onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 
+onready var BloodParticle = preload("res://Scenes/Particles/Blood.tscn")
 
 func _ready():
 	animationTree.set_active(true)
@@ -24,7 +25,7 @@ func _ready():
 	active_spell.add_rune(BounceSupport.new())
 #	active_spell.add_rune(ChainSupport.new())
 	active_spell.add_rune(ForkSupport.new())
-	active_spell.add_rune(AmplifySupport.new())
+#	active_spell.add_rune(AmplifySupport.new())
 	active_spell.add_rune(FasterSupport.new())
 
 
@@ -80,3 +81,14 @@ func move_key_pressed():
 
 func move_key_released():
 	return Input.is_action_just_released("move_down") or Input.is_action_just_released("move_up") or Input.is_action_just_released("move_left") or Input.is_action_just_released("move_right")
+
+
+func _on_HurtBox_take_hit(damage):
+	stats.do_damage(damage)
+	var blood = BloodParticle.instance()
+	blood.global_position = global_position + Vector2(0, -16)
+	get_parent().add_child(blood)
+
+
+func _on_Stats_no_hp():
+	queue_free()

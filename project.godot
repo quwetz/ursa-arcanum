@@ -49,11 +49,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Elements/element_rune.gd"
 }, {
-"base": "KinematicBody2D",
-"class": "EntityBase",
-"language": "GDScript",
-"path": "res://Scripts/Entities/entity_base.gd"
-}, {
 "base": "SupportRune",
 "class": "FasterSupport",
 "language": "GDScript",
@@ -184,10 +179,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/spell.gd"
 }, {
+"base": "StateBase",
+"class": "StateAttack",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Enemies/state_attack.gd"
+}, {
 "base": "Reference",
 "class": "StateBase",
 "language": "GDScript",
 "path": "res://Scripts/Entities/States/state_base.gd"
+}, {
+"base": "StateBase",
+"class": "StateChase",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Enemies/state_chase.gd"
 }, {
 "base": "StateBase",
 "class": "StatePlayerCast",
@@ -204,10 +209,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Entities/States/Player/state_player_roll.gd"
 }, {
+"base": "StateBase",
+"class": "StateWander",
+"language": "GDScript",
+"path": "res://Scripts/Entities/States/Enemies/state_wander.gd"
+}, {
 "base": "Node",
 "class": "Stats",
 "language": "GDScript",
-"path": "res://Scripts/Entities/Components/Stats.gd"
+"path": "res://Scripts/Entities/Components/Stats/Stats.gd"
 }, {
 "base": "Rune",
 "class": "SupportRune",
@@ -233,7 +243,6 @@ _global_script_class_icons={
 "Door": "",
 "DrunkWalker": "",
 "ElementRune": "",
-"EntityBase": "",
 "FasterSupport": "",
 "FireRune": "",
 "FireballFadeout": "",
@@ -260,10 +269,13 @@ _global_script_class_icons={
 "Rune": "",
 "SlowerSupport": "",
 "Spell": "",
+"StateAttack": "",
 "StateBase": "",
+"StateChase": "",
 "StatePlayerCast": "",
 "StatePlayerMove": "",
 "StatePlayerRoll": "",
+"StateWander": "",
 "Stats": "",
 "SupportRune": "",
 "Util": "",
@@ -342,11 +354,13 @@ use={
 
 [layer_names]
 
-2d_physics/layer_1="EntityColliders"
+2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Projectiles"
 2d_physics/layer_4="Walls"
-2d_physics/layer_5="NotWalkable"
+2d_physics/layer_5="FloorColliders"
+2d_physics/layer_11="PlayerHurtbox"
+2d_physics/layer_12="EnemyHurtbox"
 
 [rendering]
 

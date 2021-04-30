@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Vogelding.png-f37f5869b716b86c4e26c1a1ee83572e.stex"
+path="res://.import/Griffin.png-342b9599b770552508f115bfb3a17f51.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Vogelding.png"
-dest_files=[ "res://.import/Vogelding.png-f37f5869b716b86c4e26c1a1ee83572e.stex" ]
+source_file="res://sprites/Griffin.png"
+dest_files=[ "res://.import/Griffin.png-342b9599b770552508f115bfb3a17f51.stex" ]
 
 [params]
 

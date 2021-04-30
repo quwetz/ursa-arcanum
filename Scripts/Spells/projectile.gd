@@ -16,13 +16,23 @@ var n_bounce: int
 
 var speed: float
 var explosion_radius: float
-var dmg: float
+var dmg: float setget set_dmg
 var lifetime: float = 1.0
 
 var exploding: bool = false
 
+var base_damage = {
+	"fire": 20.0
+}
+
+var forked_from: Node = null
+
+onready var damage = base_damage.duplicate()
+
 var target_area: Area2D
 var target_area_radius: int = 256
+
+onready var hitBox = $HitBox 
 
 
 func _process(delta):
@@ -52,26 +62,12 @@ func initialize(s: Spell):
 	n_bounce = s.n_bounce
 	speed = s.proj_speed * 200.0
 	explosion_radius = s.aoe_radius
+	set_dmg(s.dmg)
 	set_motion(Vector2.RIGHT.rotated(rotation).normalized() * speed)
 	
 	# add $TargetArea if needed
 	if n_chain > 0:
 		add_target_area()
-
-
-
-#an entity is hit
-func _on_Hitbox_body_entered(body):
-	body.hit()
-	explode()
-	if n_chain > 0:
-		chain(body)
-	elif n_pierce > 0:
-		n_pierce -= 1
-	elif n_fork > 0:
-		fork()
-	else:
-		queue_free()
 
 
 func copy() -> Projectile:
@@ -80,7 +76,7 @@ func copy() -> Projectile:
 	p.n_pierce = n_pierce
 	p.n_chain = n_chain
 	p.n_fork = n_fork
-#	p.n_bounce = n_bounce
+	p.n_bounce = n_bounce
 	p.speed = speed
 	p.explosion_radius = explosion_radius
 	p.exploding = exploding
@@ -91,7 +87,7 @@ func copy() -> Projectile:
 # change the direction to another targetable Object in the TargetArea
 # @hit_object: The object the projectile initially hit (has to be excluded from raycast)
 func chain(hit_object: PhysicsBody2D):
-	#TODO: different collidion masks for TargetArea
+	#TODO: different collision masks for TargetArea
 	var possible_targets = target_area.get_overlapping_bodies()
 	#loop through all enemies in TargetArea and choose any one of them, that has line of sight
 	for t in possible_targets:
@@ -107,13 +103,16 @@ func chain(hit_object: PhysicsBody2D):
 		target_area.queue_free()
 
 
-func fork():
+func fork(from: Node):
 	var p = copy()
 	set_motion(motion.rotated(fork_angle))
 	p.set_motion(p.motion.rotated(-fork_angle))
+	if hitBox.overlaps_area(from):
+		p.forked_from = from
 	get_parent().add_child(p)
 	n_fork -= 1
 	p.n_fork -= 1
+
 
 # adds a $TargetArea Node to the projectile (needed for example for chaining
 func add_target_area():
@@ -123,8 +122,7 @@ func add_target_area():
 	col.shape = CircleShape2D.new()
 	col.shape.radius = target_area_radius
 	target_area.add_child(col)
-	target_area.collision_layer = Globals.PROJECTILE_LAYER
-	target_area.collision_mask = $HitBox.collision_mask
+	target_area.collision_mask = hitBox.collision_mask
 	add_child(target_area)
 
 
@@ -145,3 +143,23 @@ func explode():
 	explosion.global_position = global_position
 	explosion.rotation = rotation
 	get_parent().add_child(explosion)
+
+
+func set_dmg(value):
+	dmg = value
+	damage["fire"] = base_damage["fire"] * value
+
+func _on_HitBox_area_entered(area):
+	if forked_from == null or forked_from != area:
+		area.hit(damage)
+		explode()
+		if n_chain > 0:
+			chain(area)
+		elif n_pierce > 0:
+			n_pierce -= 1
+		elif n_fork > 0:
+			fork(area)
+		else:
+			queue_free()
+	else:
+		forked_from = null

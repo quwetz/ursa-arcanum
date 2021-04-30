@@ -26,8 +26,8 @@ func _execute(s: Spell, target_pos: Vector2, caster: Node):
 		p.rotation = caster.projSpawnPivot.rotation + spread
 		p.position = caster.projSpawnPos.position.rotated(p.rotation + spread) + caster.projSpawnPivot.global_position
 		p.exploding = exploding
-		p.initialize(s)
 		caster.get_parent().add_child(p)
+		p.initialize(s)
 
 
 func max_spread(dist: float):

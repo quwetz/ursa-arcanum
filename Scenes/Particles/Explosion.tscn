@@ -4,9 +4,8 @@
 [ext_resource path="res://sprites/Particles/Fireball2.png" type="Texture" id=2]
 [ext_resource path="res://sprites/Particles/Materials/Explosion.tres" type="Material" id=3]
 
-
-
 [node name="Explosion" type="Particles2D"]
+z_index = 1
 emitting = false
 amount = 27
 lifetime = 0.3

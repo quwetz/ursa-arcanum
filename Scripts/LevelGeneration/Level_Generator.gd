@@ -31,7 +31,7 @@ onready var Roof: TileMap = $Roof
 onready var DoorVertical = preload("res://Scenes/Objects/DoorVertical.tscn")
 onready var DoorHorizontal = preload("res://Scenes/Objects/DoorHorizontal.tscn")
 onready var Clutter = preload("res://Scenes/Objects/Clutter.tscn")
-onready var Enemy = preload("res://Scenes/Entities/Enemy.tscn")
+onready var Enemy = preload("res://Scenes/Entities/Griffin.tscn")
 
 onready var objectContainer = $Objects
 onready var enemyContainer = $Enemies

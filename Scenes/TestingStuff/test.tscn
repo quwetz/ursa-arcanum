@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Entities/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Entities/Griffin.tscn" type="PackedScene" id=2]
+
+[node name="YSort" type="YSort"]
+
+[node name="Griffin" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 163.502, 4.36536 )
