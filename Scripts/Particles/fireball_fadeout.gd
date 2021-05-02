@@ -1,5 +1,5 @@
 class_name FireballFadeout
-extends ParticleOneshot
+extends ParticleOneShot
 
 onready var velocity: Vector2 = Vector2.ZERO 
 

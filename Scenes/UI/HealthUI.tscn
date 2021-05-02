@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/health_ui.gd" type="Script" id=1]
+
+[node name="HealthUI" type="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -38.0
+margin_right = 379.0
+rect_scale = Vector2( 2, 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

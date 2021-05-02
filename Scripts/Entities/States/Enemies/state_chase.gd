@@ -9,13 +9,13 @@ var StateWander
 func _init(e: Node2D).(e):
 	StateWander = load(states_path + "/Enemies/state_wander.gd")
 	player = e.playerDetector.player
-	assert(player != null)
 	
 
 func _process(delta: float):
-	var direction: Vector2 = (player.global_position - e.global_position).normalized()
-	e.velocity = e.velocity.move_toward(direction * e.stats.move_speed, delta * e.stats.acceleration)
-	e.set_pivot_orientation(player.global_position - e.hitBoxPivot.global_position)
+	if player != null:
+		var direction: Vector2 = (player.global_position - e.global_position).normalized()
+		e.velocity = e.velocity.move_toward(direction * e.stats.move_speed, delta * e.stats.acceleration)
+		e.set_pivot_orientation(player.global_position - e.hitBoxPivot.global_position)
 
 
 func _handle_input() -> StateBase:

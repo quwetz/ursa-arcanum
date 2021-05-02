@@ -5,7 +5,7 @@ const TILE_SIZE: int = 32
 export(int) var min_room_size = 10
 export(int) var max_room_size = 20
 export(int) var max_room_count = 10
-export(float) var additional_conn_chance = 0.75
+export(float) var additional_conn_chance = 0.5
 
 
 var FLOOR: int
@@ -41,7 +41,6 @@ func _ready():
 	WALL = Walls.tile_set.find_tile_by_name("Wall")
 	ROOF = Walls.tile_set.find_tile_by_name("Roof")
 	PIT = Floor.tile_set.find_tile_by_name("Pit")
-	clear_all()
 	layout = LevelLayout.new(min_room_size, max_room_size, max_room_count, additional_conn_chance, rng)
 	draw_rooms()
 

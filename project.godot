@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Spells/Runes/Elements/fire_rune.gd"
 }, {
-"base": "ParticleOneshot",
+"base": "ParticleOneShot",
 "class": "FireballFadeout",
 "language": "GDScript",
 "path": "res://Scripts/Particles/fireball_fadeout.gd"
@@ -115,7 +115,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/LevelGeneration/RoomGeneration/manhatten_walker.gd"
 }, {
 "base": "Particles2D",
-"class": "ParticleOneshot",
+"class": "ParticleOneShot",
 "language": "GDScript",
 "path": "res://Scripts/Particles/particle_one_shot.gd"
 }, {
@@ -256,7 +256,7 @@ _global_script_class_icons={
 "Int2DGraphEdge": "",
 "LevelLayout": "",
 "ManhattenWalker": "",
-"ParticleOneshot": "",
+"ParticleOneShot": "",
 "PierceSupport": "",
 "Pivot": "",
 "Projectile": "",
@@ -289,6 +289,7 @@ config/name="shooter"
 [autoload]
 
 Globals="*res://Scripts/Globals.gd"
+Events="*res://Scripts/Events.gd"
 
 [gdnative]
 

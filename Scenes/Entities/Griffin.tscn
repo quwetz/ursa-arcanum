@@ -76,6 +76,7 @@ script = ExtResource( 7 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
 animation = "Idle"
+frame = 3
 playing = true
 offset = Vector2( 0, -20 )
 
@@ -105,10 +106,9 @@ shape = SubResource( 12 )
 [node name="Stats" parent="." instance=ExtResource( 5 )]
 script = ExtResource( 6 )
 max_hp = 50
-move_speed = 50
 attack_range = 16
 base_damage = {
-"physical": 20
+"physical": 15
 }
 
 [node name="PlayerDetector" parent="." instance=ExtResource( 8 )]

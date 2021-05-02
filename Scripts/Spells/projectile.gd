@@ -151,7 +151,7 @@ func set_dmg(value):
 
 func _on_HitBox_area_entered(area):
 	if forked_from == null or forked_from != area:
-		area.hit(damage)
+		area.hit(damage, motion.normalized())
 		explode()
 		if n_chain > 0:
 			chain(area)

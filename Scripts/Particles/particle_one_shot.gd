@@ -1,4 +1,5 @@
-class_name ParticleOneshot
+class_name ParticleOneShot
+
 extends Particles2D
 
 func _ready():

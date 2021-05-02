@@ -10,7 +10,7 @@ var v2
 # weight is the "axis-alignedness" of the edge
 # -> minimum abs distance of the x and y coordinates
 # bigger numbers mean that the rooms are not only farther away, but also more diagonally aligned
-# 
+# Distance needs to be set in child classes
 var distance: float = NAN
 
 func _init(v1, v2):
@@ -26,5 +26,5 @@ func contains_v(v) -> bool:
 func equals(e: GraphEdge) -> bool:
 	return e.contains_v(v1) and e.contains_v(v2)
 
-func smaller_distance(e1: GraphEdge, e2: GraphEdge):
+static func smaller_distance(e1: GraphEdge, e2: GraphEdge):
 	return e1.distance < e2.distance

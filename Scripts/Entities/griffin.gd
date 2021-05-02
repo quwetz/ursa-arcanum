@@ -55,7 +55,7 @@ func set_hitbox_active(value: bool):
 	hitBox.monitoring = value
 
 
-func _on_HurtBox_take_hit(damage: Dictionary):
+func _on_HurtBox_take_hit(damage: Dictionary, hit_direction: Vector2):
 	stats.do_damage(damage)
 
 
@@ -64,4 +64,5 @@ func _on_AnimatedSprite_animation_finished():
 
 
 func _on_HitBox_area_entered(area):
-	area.hit(stats.damage)
+	var hit_direction: Vector2 = (area.global_position - global_position).normalized()
+	area.hit(stats.damage, hit_direction)
