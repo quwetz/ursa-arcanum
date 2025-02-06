@@ -5,5 +5,7 @@ const ENEMY_LAYER = 2
 const PROJECTILE_LAYER = 4
 const OBSTACLE_LAYER = 8
 
+var cheat_controller: CheatController
+
 func is_on_layer(layer_value, collision_layer):
 	return (collision_layer & layer_value) != 0

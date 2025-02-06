@@ -1,5 +1,7 @@
 class_name ForkSupport
 extends SupportRune
 
-func _apply_support_effect(s: Spell):
-	s.n_fork += 1
+func _init(s: Spell):
+	spell = s
+	n_fork = 1
+	Globals.cheat_controller.fork = self

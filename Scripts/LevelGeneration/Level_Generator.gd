@@ -13,6 +13,8 @@ var WALL: int
 var ROOF: int
 var PIT: int
 
+var enemiesPaused: bool = true
+
 var current_floor_index: int = 0
 var floor_types = [
 		"FloorBig",
@@ -54,7 +56,11 @@ func _process(delta):
 		FLOOR = Floor.tile_set.find_tile_by_name(floor_types[current_floor_index])
 		current_floor_index = (current_floor_index + 1 ) % floor_types.size()
 		draw_rooms()
-
+	if Input.is_action_just_pressed("Debug3"):
+		enemiesPaused = !enemiesPaused
+		for child in enemyContainer.get_children():
+			child.set_process(enemiesPaused)
+			child.set_physics_process(enemiesPaused)
 
 func clear_all():
 	Floor.clear()
@@ -107,6 +113,7 @@ func instance_enemy(pos: Vector2):
 	var enemy = Enemy.instance()
 	enemyContainer.add_child(enemy)
 	enemy.set_global_position(tile_to_world_coordinates(pos))
+	enemy.set_process(false)
 
 
 func instance_door(pos: Vector2, is_horizontal: bool):

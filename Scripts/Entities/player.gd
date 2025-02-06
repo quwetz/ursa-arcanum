@@ -12,7 +12,8 @@ onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var canvas = $CanvasModulate
-
+onready var light = $ViewLight
+onready var canvasModulate = $CanvasModulate
 
 func _ready():
 	animationTree.set_active(true)
@@ -22,17 +23,23 @@ func _ready():
 	active_spell = Spell.new(self)
 	active_spell.add_rune(FireRune.new())
 	active_spell.add_rune(ProjectileRune.new())
-#	active_spell.add_rune(BounceSupport.new())
-##	active_spell.add_rune(ChainSupport.new())
-#	active_spell.add_rune(ForkSupport.new())
-##	active_spell.add_rune(AmplifySupport.new())
-#	active_spell.add_rune(FasterSupport.new())
+	active_spell.add_rune(AmplifySupport.new(active_spell))
+	active_spell.add_rune(PierceSupport.new(active_spell))
+	active_spell.add_rune(BounceSupport.new(active_spell))
+	active_spell.add_rune(ChainSupport.new(active_spell))
+	active_spell.add_rune(ForkSupport.new(active_spell))
+	active_spell.add_rune(FasterSupport.new(active_spell))
+
+	
 
 
 func _process(delta):
 	var next_state: StateBase = state._handle_input()
 	if(next_state != null):
 		change_state(next_state)
+	if Input.is_action_just_pressed("Debug4"):
+		light.visible = !light.visible
+		canvasModulate.visible = !canvasModulate.visible
 
 
 func _physics_process(delta):
