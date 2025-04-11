@@ -81,6 +81,8 @@ func change_state(to: StateBase):
 func state_anim_finished():
 	state.animation_finished()
 
+func state_cast():
+	state.cast()
 
 func move_key_pressed():
 	return Input.is_action_just_pressed("move_down") or Input.is_action_just_pressed("move_up") or Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right")

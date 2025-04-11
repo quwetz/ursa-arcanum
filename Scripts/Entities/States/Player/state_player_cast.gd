@@ -29,10 +29,11 @@ func _handle_input() -> StateBase:
 	if Input.is_action_just_pressed("roll"):
 		return StateRoll.new(e)
 	return null
-
+	
+func cast():
+	e.active_spell.cast(e.target_pos)
 
 func animation_finished():
-	e.active_spell.cast(e.target_pos)
 	if Input.is_action_pressed("cast"):
 		_enter()
 	else:

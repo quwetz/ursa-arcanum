@@ -86,17 +86,25 @@ func copy() -> Projectile:
 
 # change the direction to another targetable Object in the TargetArea
 # @hit_object: The object the projectile initially hit (has to be excluded from raycast)
-func chain(hit_object: PhysicsBody2D):
+func chain(hit_object: CollisionObject2D):
 	#TODO: different collision masks for TargetArea
-	var possible_targets = target_area.get_overlapping_bodies()
+	var possible_targets = target_area.get_overlapping_areas()
 	#loop through all enemies in TargetArea and choose any one of them, that has line of sight
+	
+	var vector_to_closest_target = null
+	var distance_to_closest_target = INF
 	for t in possible_targets:
-		if t != hit_object:
-			var result = get_world_2d().direct_space_state.intersect_ray(
+		if t != hit_object && t.name == "HurtBox":
+			var blocked = get_world_2d().direct_space_state.intersect_ray(
 					global_position, t.global_position, [], collision_mask)
-			if not result:
-				set_motion((t.global_position - global_position).normalized() * speed)
-				break
+			if not blocked:
+				var vector_to_t = (t.global_position - global_position)
+				if vector_to_t.length() < distance_to_closest_target:
+					vector_to_closest_target = vector_to_t
+					distance_to_closest_target = vector_to_t.length()
+					
+	if vector_to_closest_target != null:
+		set_motion(vector_to_closest_target.normalized() * speed)
 	n_chain -= 1
 	if n_chain == 0:
 		remove_child(target_area)
@@ -118,11 +126,11 @@ func fork(from: Node):
 func add_target_area():
 	target_area = Area2D.new()
 	target_area.name = "TargetArea"
+	target_area.collision_mask = hitBox.collision_mask
 	var col = CollisionShape2D.new()
 	col.shape = CircleShape2D.new()
 	col.shape.radius = target_area_radius
 	target_area.add_child(col)
-	target_area.collision_mask = hitBox.collision_mask
 	add_child(target_area)
 
 

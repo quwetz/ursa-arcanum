@@ -32,7 +32,6 @@ func add_rune(r: Rune):
 		"element":
 			element = r
 		"support":
-			r.enable()
 			supports.append(r)
 		"behaviour":
 			if primary_behaviour == null:

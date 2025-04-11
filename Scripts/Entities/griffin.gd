@@ -6,7 +6,7 @@ var velocity: Vector2 = Vector2.ZERO
 
 
 onready var stats = $Stats
-onready var hurtBox = $HurtBox
+onready var hurtBox = $HurtBoxPivot/HurtBox
 onready var hitBox = $HitBoxPivot/HitBox
 onready var hitBoxPivot = $HitBoxPivot
 onready var sprite = $AnimatedSprite

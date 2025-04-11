@@ -54,5 +54,6 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggerbox"]
 position = Vector2( 0, 24 )
 shape = SubResource( 7 )
+
 [connection signal="body_entered" from="Triggerbox" to="." method="_on_Triggerbox_body_entered"]
 [connection signal="body_exited" from="Triggerbox" to="." method="_on_Triggerbox_body_exited"]
