@@ -290,13 +290,17 @@ _global_script_class_icons={
 
 [application]
 
-config/name="shooter"
+config/name="Ursa Arcanum"
 run/main_scene="res://Scenes/Main.tscn"
 
 [autoload]
 
 Globals="*res://Scripts/Globals.gd"
 Events="*res://Scripts/Events.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [gdnative]
 
