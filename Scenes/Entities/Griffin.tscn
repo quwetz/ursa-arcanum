@@ -120,6 +120,7 @@ base_damage = {
 shape = SubResource( 13 )
 
 [node name="Node" type="Node2D" parent="."]
+visible = false
 z_index = 100
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Node"]

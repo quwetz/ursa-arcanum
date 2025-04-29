@@ -22,7 +22,7 @@ text = "H: Hide Controls
 LeftMouseButton: Cast Fireball
 Mousewheel: Zoom
 WASD: Movement
-Space: Combat Roll
+Space: Lightning Dashl
 
 F1: generate new maze
 F2: change tileset-variation

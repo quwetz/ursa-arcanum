@@ -9,3 +9,6 @@ export_presets.cfg
 bin/
 build/
 lib/
+
+art-sources
+spells-planning.xlsx
